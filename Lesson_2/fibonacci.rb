@@ -1,12 +1,9 @@
-F = [0, 1]
+f = [0, 1]
+s = 1
 
-while true
-	s =  F[-1] + F[-2]
-	if s < 100
-		F << s
-	else
-		break
-	end
+while s < 100
+	f << s
+	s =  f[-1] + f[-2]
 end
 
-puts F
+puts f

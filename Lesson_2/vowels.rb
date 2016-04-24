@@ -1,13 +1,9 @@
 vowels = ['а', 'е', 'ё', 'и', 'о', 'у', 'ы', 'э', 'ю', 'я']
 
-vow_hash = Hash.new
+vow_hash = {}
 
-i = 1
 
-('а'..'я').each do |l| 
-	vow_hash[l] = i if vowels.include? l
-	i += 1
-end
+('а'..'я').each_with_index { |l, i| vow_hash[l] = i+1 if vowels.include? l }
 
 puts vow_hash
 

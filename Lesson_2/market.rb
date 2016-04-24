@@ -1,4 +1,4 @@
-bucket = Hash.new
+bucket = {}
 
 
 loop do
@@ -12,7 +12,7 @@ loop do
 	puts "Введите количество купленного товара: "
 	num = gets.chomp.to_f
 
-	bucket[prod] = { Цена: price, Количество: num}
+	bucket[prod] = { price: price, number: num}
 end 
 
 
@@ -22,11 +22,10 @@ puts bucket
 s = 0
 puts "\nИтоговые суммы по товарам: "
 bucket.each do |k, v| 
-	r = v[:Цена]*v[:Количество]
+	r = v[:price]*v[:number]
 	puts "#{k}: #{r}"
 	s += r
 end
 
-
-
 puts "\nСумма всех покупок: #{s}"
+
