@@ -3,7 +3,7 @@ require_relative 'prod_name_module'
 
 class Train
   include ProdName
-  @@trains = [] #Массив для хранения созданных объектов-поездов
+  @@trains = {} #Хэш для хранения созданных объектов-поездов
   
   #скорость, число вагонов, номер поезда - к этим параметрам неплохо иметь доступ(чтение) извне
   attr_reader :speed, :name, :number
@@ -13,7 +13,7 @@ class Train
     @number = number
     @speed = 0
     @waggons = []
-    @@trains << self
+    @@trains[number] = self
   end
 
   def self.all
@@ -21,8 +21,7 @@ class Train
   end
 
   def self.find(number)
-    @@trains.each { |t| return t if t.number == number}
-    nil
+    @@trains[number]
   end
 
 
