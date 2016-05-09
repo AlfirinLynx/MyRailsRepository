@@ -1,0 +1,2 @@
+class CargoWaggon < Waggon
+end
