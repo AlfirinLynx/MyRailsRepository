@@ -2,7 +2,7 @@
 require_relative 'station'
 class Route
   attr_reader :first_station, :last_station, :name
-  
+
   def initialize(name, first_station, last_station)
     @name = name
     @first_station = first_station
@@ -20,11 +20,10 @@ class Route
   end
 
   def list_stations
-    puts "Stations of the route:"
+    puts 'Stations of the route:'
     stations.each { |st| puts st.name }
   end
 
-  #Возвращает объект класса Station по имени станции
   def station_by_name(station_name)
     stations.each { |st| return st if st.name == station_name }
     nil
@@ -34,27 +33,22 @@ class Route
     stations.include? station
   end
 
-	#Следующая станция по отношению к данной
   def next_to(station)
     station != stations.last ? stations[stations.index(station) + 1] : nil
   end
 
-  #Предыдущая станция по отношению к данной
   def prev_to(station)
     station != stations.first ? stations[stations.index(station) - 1] : nil
   end
 
-
-
   def add_station(station, position = 1)
-    if (1..(stations.length-1)).include? position
+    if (1..(stations.length - 1)).cover? position
       stations.insert(position, station)
     else
       puts "Первая и последняя станции маршрута не могут быть изменены!"
     end
   end
 
-	#Если by_name = true, то удаление станции происходит по ее имени, если нет - по экземпляру класса Station
   def delete_station(station)
     return "Первая и последняя станции маршрута не могут быть удалены!" if stations.first == station || stations.last == station
     stations.delete(station) if station_in_route?(station)
@@ -66,16 +60,13 @@ class Route
   end
 
   protected
-  #Массив объектов класса Station - неинформативен для внешнего пользователя, список станций можно получить с помощью интерфейса
+
   attr_accessor :stations
 
   def validate!
     raise "Имя маршрута должно быть непустым" if name.empty?
-    raise "Не задана первая станция маршрута" if not first_station.is_a? Station
-    raise "Не задана последняя станция маршрута" if not last_station.is_a? Station
+    raise "Не задана первая станция маршрута" unless first_station.is_a? Station
+    raise "Не задана последняя станция маршрута" unless last_station.is_a? Station
     true
   end
-  
-
 end
-

@@ -30,37 +30,35 @@ q - выход
   com = gets.chomp
   break if com == 'q'
 
-  case
-  when com == 'cm'
+  if com == 'cm'
     puts com_list
-  when com == 'train'
+  elsif com == 'train'
     management.create_train_or_wagon_dialogue(:train)
     management.list_objects(:train)
-  when com == 'waggon'
+  elsif com == 'waggon'
     management.create_train_or_wagon_dialogue(:waggon)
     management.list_objects(:waggon)
-  when com == 'route'
+  elsif com == 'route'
     management.create_route
     management.list_objects(:route)
-  when com == 'station'
+  elsif com == 'station'
     management.create_station
     management.list_objects(:station)
-  when com == 'add_wag'
+  elsif com == 'add_wag'
     management.add_wag
-  when com == 'del_wag'
+  elsif com == 'del_wag'
     management.del_wag
-  when com == 'train_to_st'
+  elsif com == 'train_to_st'
     management.train_to_station
-  when com == 'list_st'
+  elsif com == 'list_st'
     management.list_objects(:station)
-  when com == 'trains_at'
+  elsif com == 'trains_at'
     management.trains_at
-  when com == 'list_wag'
+  elsif com == 'list_wag'
     management.list_wag
-  when com == 'wag_take'
+  elsif com == 'wag_take'
     management.take_space_or_seat
   else
     puts "Неизвестная команда"
   end
-      
 end

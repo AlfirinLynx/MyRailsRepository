@@ -6,11 +6,9 @@ class Train
 
   NUMBER_FORMAT = /^[0-9а-яa-z]{3}-*[0-9а-яa-z]{2}$/i
 
-  # скорость, число вагонов, номер поезда - к этим параметрам неплохо иметь доступ(чтение) извне
   attr_reader :speed, :name, :number
-  @@trains = {} # Хэш для хранения созданных объектов-поездов
-  
-  
+  @@trains = {}
+
   def self.all
     @@trains
   end
@@ -18,8 +16,6 @@ class Train
   def self.find(number)
     @@trains[number]
   end
-
-
 
   def initialize(name, number)
     @name = name
@@ -30,21 +26,18 @@ class Train
     @@trains[number] = self
   end
 
-
-
-  ########Методы интерфейса############
+  # #######Методы интерфейса############
   def waggon_block
-    return "No block" unless block_given?
+    return 'No block' unless block_given?
     waggons.each { |w| yield w }
   end
 
-  
   def valid?
     validate!
   rescue
     false
   end
-  
+
   def go
     self.speed = usual_speed
   end
@@ -83,7 +76,7 @@ class Train
 
   def go_to_station_by_name(station_name)
     station = route.station_by_name(station_name) if route
-    go_to_station(station) #если нет заданного маршрута, то в аргумент функции попадет station = nil, обработка этого случая предусмотрена
+    go_to_station(station)
   end
 
   def show_current_station
@@ -103,11 +96,10 @@ class Train
   end
 
   protected
-  
-  attr_accessor :route, :cur_station, :waggons # для показа текущей станции есть свой метод интерфейса, станция может и не существовать до принятия маршрута
-  attr_writer :speed # изменять скорость можно только с помощью интерфейса
 
-  # Метод используется вместо константы, устанавливает рабочую скорость поезда
+  attr_accessor :route, :cur_station, :waggons
+  attr_writer :speed
+
   def usual_speed
     70
   end

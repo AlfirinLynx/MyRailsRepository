@@ -7,18 +7,15 @@ require_relative 'passenger_waggon'
 require_relative 'cargo_waggon'
 require_relative 'station'
 
-# Создаем станции
-s1 = Station.new("Msk")
-s2 = Station.new("Spb")
+s1 = Station.new('Msk')
+s2 = Station.new('Spb')
 
-# Поезда
-pt1 = PassengerTrain.new("P1", "zx3-45")
-ct1 = CargoTrain.new("C1", "яч4лп")
+pt1 = PassengerTrain.new('P1', 'zx3-45')
+ct1 = CargoTrain.new('C1', "яч4лп")
 
-pt2 = PassengerTrain.new("P2", "er7-v5")
-ct2 = CargoTrain.new("C2", "xcv57")
+pt2 = PassengerTrain.new('P2', 'er7-v5')
+ct2 = CargoTrain.new('C2', 'xcv57')
 
-# Вагоны
 pw1 = PassengerWaggon.new('Pw1', 30)
 cw1 = CargoWaggon.new('Cw1', 500)
 pw1.take_seat
@@ -29,7 +26,6 @@ cw2 = CargoWaggon.new('Cw2', 700)
 5.times { pw2.take_seat }
 cw2.take_space 500
 
-# Связь объектов между собой
 pt1.add_waggon(pw1)
 pt2.add_waggon(pw2)
 

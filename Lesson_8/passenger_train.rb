@@ -2,7 +2,7 @@
 require_relative 'type_setter'
 class PassengerTrain < Train
   include TypeSetter
-  
+
   def add_waggon(waggon)
     if waggon.is_a? PassengerWaggon
       super(waggon)
@@ -17,5 +17,4 @@ class PassengerTrain < Train
   def usual_speed
     75
   end
-  
 end

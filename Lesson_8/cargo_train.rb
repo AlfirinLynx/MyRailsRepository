@@ -2,7 +2,7 @@
 require_relative 'type_setter'
 class CargoTrain < Train
   include TypeSetter
-  
+
   def add_waggon(waggon)
     if waggon.is_a? CargoWaggon
       super(waggon)
@@ -13,7 +13,7 @@ class CargoTrain < Train
 
   protected
 
-  #Переопределена рабочая скорость грузового поезда
+  # Переопределена рабочая скорость грузового поезда
   def usual_speed
     60
   end

@@ -1,8 +1,6 @@
 # coding: utf-8
 class RailManagement
-  
   def initialize
-    # Для хранения созданных поездов, станций, вагонов, маршрутов
     @trains = {}
     @stations = {}
     @waggons = {}
@@ -17,7 +15,7 @@ class RailManagement
       is_pas = yes_no_dial("Это пассажирский #{nm[0...-1]}? Введите 'да' или 'нет'")
       name = enter("Введите имя #{nm}")
       number = enter("Введите номер поезда в правильном формате") if is_train
-           
+
       if is_pas == "да"
         new = is_train ? PassengerTrain.new(name, number) : PassengerWaggon.new(name, enter("Введите общее количество пассажирских мест").to_i)
         puts "\nСоздан новый пассажирский #{nm[0...-1]} #{new.name}\n"
@@ -31,7 +29,6 @@ class RailManagement
       retry
     end
   end
-  
 
   def create_station
     name = enter("Введите имя станции")
@@ -40,7 +37,6 @@ class RailManagement
     puts "Создана новая станция с именем #{station.name}"
   end
 
-  
   def create_route
     name = enter("Введите имя(номер) маршрута: ")
     f_stat = enter_obj_name(:station, "Введите имя первой станции маршрута")
@@ -76,7 +72,7 @@ class RailManagement
       puts "Объем занят. Свободный объем: #{wag.free_space}"
     end
   end
-  
+
   def add_wag
     tr = enter_obj_name(:train, "Введите имя поезда")
     return unless tr
@@ -109,7 +105,7 @@ class RailManagement
     ar, name = id_array_name(obj, true)
     if ar.any?
       puts "\nСозданные #{name}:\n"
-      ar.each { |k, v| puts k }
+      ar.each { |k, _v| puts k }
       puts "\n"
     else
       puts "\nСозданные #{name} отсутствуют\n"
@@ -117,7 +113,7 @@ class RailManagement
   end
 
   private
-  
+
   attr_accessor :trains, :stations, :waggons, :routes
 
   # Возвращает соответствующий массив по типу(поед, вагон, маршрут, станция), а также имя
@@ -133,13 +129,11 @@ class RailManagement
     ar[name]
   end
 
-  # Часто встречающиеся диалоги
-  
   def enter(msg)
     puts msg
     gets.chomp
   end
-  
+
   def enter_obj_name(obj, msg)
     res = nil
     loop do
