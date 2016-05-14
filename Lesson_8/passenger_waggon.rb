@@ -3,7 +3,9 @@ require_relative 'type_setter'
 require_relative 'waggon'
 class PassengerWaggon < Waggon
   include TypeSetter
+  
   attr_reader :taken_seats, :seats
+  
   def initialize(name, seats)
     @seats = seats
     @taken_seats = 0
@@ -19,6 +21,7 @@ class PassengerWaggon < Waggon
   end
 
   protected
+  
   attr_writer :taken_seats, :seats
   def validate!
     super
