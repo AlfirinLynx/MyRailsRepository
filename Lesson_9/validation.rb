@@ -1,3 +1,4 @@
+# coding: utf-8
 module Validation
   def self.included(base)
     base.class_variable_set(:@@valid_hash, {})
@@ -6,8 +7,11 @@ module Validation
   end
 
   module ClassMethods
-    def validate(name, *args)
-      (class_variable_get(:@@valid_hash))[name] = args
+    def validate(name, validator, *args)
+      val_hash = class_variable_get(:@@valid_hash)
+      # значением по ключу name является хэш типа: {format: /a*-b/, type: Station}, т. е. одному атрибуту можно задать несколько валидаторов
+      val_hash[name] ||= {} 
+      val_hash[name][validator] = args
     end
   end
 
@@ -19,28 +23,29 @@ module Validation
     end
     
     protected
-    
+
     def validate!
       val_hash = self.class.class_variable_get(:@@valid_hash)
-      val_hash.each do |name, args|
+      val_hash.each do |name, valid_list|
         attr_name = "@#{name}".to_sym
         attr_val = instance_variable_get(attr_name)
-        validator = args[0]
-        if validator == :presence
-          raise "Attribute's value shouldn't be nil" if attr_val.nil?
-          raise "Attribute's value shouldn't be empty" if attr_val.empty?
-        elsif validator == :format
-          raise "Wrong format" if attr_val !~ args[1]
-        elsif validator == :type
-          raise "Wrong type" unless attr_val.instance_of? args[1]
-        else
-          raise "Unknown validator"
-        end
+        valid_list.each { |validator, args| send "#{validator}_validate".to_sym, attr_val, *args }
       end
       true
     end
 
+    def presence_validate(attr_val, *args)
+      raise "Attribute's value shouldn't be nil" if attr_val.nil?
+      raise "Attribute's value shouldn't be empty" if attr_val.empty?
+    end
+
+    def format_validate(attr_val, *args)
+      raise "Wrong format: #{attr_val}" if attr_val !~ args[0]
+    end
+
+    def type_validate(attr_val, *args)
+      raise "Wrong type:'#{attr_val.class.name}' ('#{args[0].name}' needed)" unless attr_val.instance_of? args[0]
+    end
+    
   end
 end
-  
- 

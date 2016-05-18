@@ -6,8 +6,9 @@ module Accessors
       attr_his = "@#{name}_his".to_sym
       define_method(name) { instance_variable_get(attr_name) }
       define_method("#{name}=".to_sym) do |value|
+        old_val = instance_variable_get(attr_name)
+        instance_variable_set(attr_his, (instance_variable_get(attr_his) || []) << old_val) if old_val
         instance_variable_set(attr_name, value)
-        instance_variable_set(attr_his, (instance_variable_get(attr_his) || []) << value)
       end
       define_method("#{name}_history".to_sym) { instance_variable_get(attr_his) }
     end
@@ -40,6 +41,10 @@ t.b = 'a'
 t.a = 'cat'
 
 t.b = 7
+
+t.a = 15
+
+t.b = 17
 
 puts t.a_history # Выведет [ 5, 'cat']
 puts t.b_history # Выведет [ 'a', 7 ]
